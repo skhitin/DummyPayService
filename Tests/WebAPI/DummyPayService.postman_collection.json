@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "9c27ef52-fabd-4e2c-8a49-185ea4722bef",
+		"name": "DummyPayService",
+		"description": "DummyPay is a simple payment service with simulated 3-DS workflow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create payment",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Merchant-Id",
+						"value": "{{merchantId}}",
+						"type": "text"
+					},
+					{
+						"key": "Secret-Key",
+						"value": "{{secretKey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"orderId\": \"DBB99946-A10A-4D1B-A742-577FA026BC57\",\r\n  \"amount\": 12312,\r\n  \"currency\": \"USD\",\r\n  \"country\": \"CY\",\r\n  \"cardNumber\": \"4111111111111111\",\r\n  \"cardHolder\": \"TEST TESTER\",\r\n  \"cardExpiryDate\": \"1123\",\r\n  \"cvv\": \"111\"\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/payment/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"payment",
+						"create"
+					]
+				},
+				"description": "Payment creation"
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Merchant-Id",
+						"type": "text",
+						"value": "{{merchantId}}"
+					},
+					{
+						"key": "Secret-Key",
+						"type": "text",
+						"value": "{{secretKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"transactionId\": \"94ac5a85-8b81-4aaa-89dd-00e968f05d01\",\r\n  \"paRes\": \"MzgxMmYwNjItODY4MC00ZTQzLTkxMjUtMDQzNTU4Zjc4Yjc4\"\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/payment/confirm",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"payment",
+						"confirm"
+					]
+				},
+				"description": "Payment confirmation"
+			},
+			"response": []
+		},
+		{
+			"name": "Get payment status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Merchant-Id",
+						"type": "text",
+						"value": "{{merchantId}}"
+					},
+					{
+						"key": "Secret-Key",
+						"type": "text",
+						"value": "{{secretKey}}"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/payment/{{transactionId}}/status",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"payment",
+						"{{transactionId}}",
+						"status"
+					]
+				},
+				"description": "Payment status"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
