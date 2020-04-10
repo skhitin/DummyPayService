@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using DummyPayService.DataContracts;
+using DummyPayService.Api.DataContracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DummyPayService.Controllers
+namespace DummyPayService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -21,7 +21,7 @@ namespace DummyPayService.Controllers
         {
             return StatusCode((int)HttpStatusCode.OK, parameters);
         }
-        
+
         [HttpPost]
         [Route("confirm")]
         public ActionResult<string> ConfirmPayment([FromBody][Required] ConfirmPaymentRequestParameter parameters)

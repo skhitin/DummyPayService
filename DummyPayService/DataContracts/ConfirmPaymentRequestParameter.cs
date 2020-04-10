@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DummyPayService.DataContracts
+namespace DummyPayService.Api.DataContracts
 {
     [DataContract]
     public class ConfirmPaymentRequestParameter
