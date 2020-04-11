@@ -8,6 +8,7 @@ namespace DummyPayService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizationFilter]
     public class PaymentController : ControllerBase
     {
         public PaymentController()
