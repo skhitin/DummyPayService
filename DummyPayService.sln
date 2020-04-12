@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyPayService.Api", "DummyPayService\DummyPayService.Api.csproj", "{19F9D906-D5D4-4D50-ACF7-1FE9D99D01A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyPayService.Api", "DummyPayService.Api\DummyPayService.Api.csproj", "{19F9D906-D5D4-4D50-ACF7-1FE9D99D01A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyPayService.Core", "DummyPayService.Core\DummyPayService.Core.csproj", "{9EDD8B72-6F65-469D-BF87-9B1978A3FDEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyPayService", "DummyPayService\DummyPayService.csproj", "{E1255836-7B62-428D-AD18-909E9F689F2B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8BDD302A-0C1D-4252-BE60-142F1739679C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyPayService.UnitTests", "DummyPayService.UnitTests\DummyPayService.UnitTests.csproj", "{EBBD94C2-A7A6-4471-B851-2980E0D4A369}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +23,24 @@ Global
 		{19F9D906-D5D4-4D50-ACF7-1FE9D99D01A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F9D906-D5D4-4D50-ACF7-1FE9D99D01A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F9D906-D5D4-4D50-ACF7-1FE9D99D01A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EDD8B72-6F65-469D-BF87-9B1978A3FDEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EDD8B72-6F65-469D-BF87-9B1978A3FDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EDD8B72-6F65-469D-BF87-9B1978A3FDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EDD8B72-6F65-469D-BF87-9B1978A3FDEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1255836-7B62-428D-AD18-909E9F689F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1255836-7B62-428D-AD18-909E9F689F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1255836-7B62-428D-AD18-909E9F689F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1255836-7B62-428D-AD18-909E9F689F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBBD94C2-A7A6-4471-B851-2980E0D4A369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBBD94C2-A7A6-4471-B851-2980E0D4A369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBBD94C2-A7A6-4471-B851-2980E0D4A369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBBD94C2-A7A6-4471-B851-2980E0D4A369}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EBBD94C2-A7A6-4471-B851-2980E0D4A369} = {8BDD302A-0C1D-4252-BE60-142F1739679C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A8EA9C6-4434-405C-AF47-39DDA97E5F5E}

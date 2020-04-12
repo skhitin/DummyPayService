@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DummyPayService.Api.DataContracts
+namespace DummyPayService.Core.DataContracts
 {
     [DataContract]
     public class CreatePaymentRequestParameter
@@ -25,7 +25,7 @@ namespace DummyPayService.Api.DataContracts
         public string CardHolder { get; set; }
 
         [DataMember]
-        public string CardExpirationDate { get; set; }
+        public string CardExpiryDate { get; set; }
 
         [DataMember]
         public string CVV { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DummyPayService.Exceptions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -54,8 +55,15 @@ namespace DummyPayService.Api
         {
             switch (exception)
             {
+                case ArgumentNullException _:
                 case ArgumentException _:
+                case PaymentAlreadyExistsException _:
+                case TransactionAlreadyExistsException _:
                     return HttpStatusCode.BadRequest;
+
+                case TransactionNotFoundException _:
+                    return HttpStatusCode.NotFound;
+
                 case UnauthorizedAccessException _:
                     return HttpStatusCode.Unauthorized;
             }

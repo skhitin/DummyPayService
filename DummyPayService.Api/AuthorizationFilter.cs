@@ -10,7 +10,7 @@ namespace DummyPayService.Api
     public class AuthorizationFilter : Attribute, IAuthorizationFilter
     {
         private readonly string MerchantIdHeaderName = "Merchant-Id";
-        private readonly string SecretKeyHeaderName = "Seckret-Key";
+        private readonly string SecretKeyHeaderName = "Secret-Key";
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -26,7 +26,7 @@ namespace DummyPayService.Api
 
             if (IsUnauthorized(context.HttpContext.Request.Headers))
             {
-                context.Result = new CustomUnauthorizedResult("Unauthorized, merchant-id or secret-key is null.");
+                context.Result = new CustomUnauthorizedResult("Unauthorized, merchant-id or secret-key is not valid.");
             }
         }
 
