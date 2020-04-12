@@ -6,6 +6,7 @@ using DummyPayService.Core.Commands;
 using DummyPayService.Core.DataContracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace DummyPayService.Api.Controllers
 {
@@ -14,11 +15,14 @@ namespace DummyPayService.Api.Controllers
     [AuthorizationFilter]
     public class PaymentController : ControllerBase
     {
+        private ILogger<PaymentController> _logger { get; }
+
         private IMediator _mediator { get; }
 
-        public PaymentController(IMediator mediator)
+        public PaymentController(IMediator mediator, ILogger<PaymentController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPost]
