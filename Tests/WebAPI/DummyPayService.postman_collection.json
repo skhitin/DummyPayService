@@ -8,6 +8,69 @@
 	"item": [
 		{
 			"name": "Create payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "90545af7-ff33-469e-9af8-e18c9032e8b4",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    postman.setEnvironmentVariable(\"transaction-id\", jsonData.result.transactionId)  ",
+							"    postman.setEnvironmentVariable(\"pa-req\", jsonData.result.paReq)       ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Merchant-Id",
+						"value": "{{merchant-id}}",
+						"type": "text"
+					},
+					{
+						"key": "Secret-Key",
+						"value": "{{secret-key}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"orderId\": \"DBB99946-A10A-4D1B-A742-577FA026BC57\",\r\n  \"amount\": 12312,\r\n  \"currency\": \"USD\",\r\n  \"country\": \"CY\",\r\n  \"cardNumber\": \"4111111111111111\",\r\n  \"cardHolder\": \"TEST TESTER\",\r\n  \"cardExpiryDate\": \"1123\",\r\n  \"cvv\": \"111\"\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/payment/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"payment",
+						"create"
+					]
+				},
+				"description": "Payment creation"
+			},
+			"response": []
+		},
+		{
+			"name": "Request to 3-DS",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
 					"content-type": true
@@ -47,13 +110,36 @@
 						"create"
 					]
 				},
-				"description": "Payment creation"
+				"description": "PaReq request to bank emitent"
 			},
 			"response": []
 		},
 		{
 			"name": "Confirm payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "897f4c1f-dedb-4ce4-a2d2-0836cefc56f4",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -64,17 +150,17 @@
 					{
 						"key": "Merchant-Id",
 						"type": "text",
-						"value": "{{merchantId}}"
+						"value": "{{merchant-id}}"
 					},
 					{
 						"key": "Secret-Key",
 						"type": "text",
-						"value": "{{secretKey}}"
+						"value": "{{secret-key}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"transactionId\": \"94ac5a85-8b81-4aaa-89dd-00e968f05d01\",\r\n  \"paRes\": \"MzgxMmYwNjItODY4MC00ZTQzLTkxMjUtMDQzNTU4Zjc4Yjc4\"\r\n}"
+					"raw": "{\r\n  \"transactionId\": \"{{transaction-id}}\",\r\n  \"paRes\": \"{{pa-req}}\"\r\n}"
 				},
 				"url": {
 					"raw": "{{host}}/api/payment/confirm",
@@ -93,29 +179,44 @@
 		},
 		{
 			"name": "Get payment status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c56a12c2-5103-4fbe-a400-4b6816a00507",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Merchant-Id",
 						"type": "text",
-						"value": "{{merchantId}}"
+						"value": "{{merchant-id}}"
 					},
 					{
 						"key": "Secret-Key",
 						"type": "text",
-						"value": "{{secretKey}}"
+						"value": "{{secret-key}}"
 					}
 				],
 				"url": {
-					"raw": "{{host}}/api/payment/{{transactionId}}/status",
+					"raw": "{{host}}/api/payment/{{transaction-id}}/status",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"payment",
-						"{{transactionId}}",
+						"{{transaction-id}}",
 						"status"
 					]
 				},
