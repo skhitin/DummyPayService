@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Create payment</h1>
+        <input type="text" name="cardNumber" id="CardNumber" value="4111111111111111" />
+        <input type='button' onclick='CreatePayment()' value='Create payment'>
+        <h1 class="display-4">Send to 3-DS</h1>
+        <form action="http://dummypay.host/secure/" method="POST">
+            <input type="text" name="MD" id="MD" value="testorder-1" />
+            <input type="text" name="TermUrl" value="http://localhost:55270/home/final" />
+            <input type="text" name="PaReq" id="PaReq" value="" />
+            <input type="submit" title="Submit" />
+        </form>
+    </div>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+<script>
+
+    localStorage.setItem('createPayment', null);
+
+    async function postData(url = '', data = {}) {
+        const response = await fetch(url, {
+            method: 'POST',
+            mode: 'cors', 
+            cache: 'no-cache', 
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'Merchant-Id': '6fc3aa31-7afd-4df1-825f-192e60950ca1',
+                'Secret-Key': '53cr3t'
+            },
+            redirect: 'follow', 
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(data) 
+        });
+        return await response.json(); 
+    }
+
+    function CreatePayment() {
+        postData('http://localhost:55270/api/payment/create', {
+            "orderId": "@Guid.NewGuid().ToString()",
+            "amount": 12312,
+            "currency": "USD",
+            "country": "CY",
+            "cardNumber": $('#CardNumber').val(),
+            "cardHolder": "TEST TESTER",
+            "cardExpiryDate": "1123",
+            "cvv": "111"
+        })
+            .then((data) => {
+                localStorage.setItem('createPayment', data);
+                $('#PaReq').val(data.result.paReq);
+                $('#MD').val(data.result.transactionId);
+                console.log(data);
+            });
+    }
+
+</script>

@@ -39,19 +39,36 @@ namespace DummyPayService.BankEmitentClient
 
         public async Task<PaymentTransaction> CheckPaymentAsync(Guid transactionId, string paRes)
         {
-            if (!TryGetTransaction(transactionId, paRes, out var transaction))
+            if (!_transactions.TryGetValue(transactionId, out var transaction))
             {
-                throw new TransactionNotFoundException($"The transaction with transactionId={transactionId} and paRes={paRes} not found.");
+                throw new TransactionNotFoundException($"The transaction with transactionId={transactionId} not found.");
             }
+
+            transaction = _transactions.AddOrUpdate(transaction.TransactionId, transaction, 
+                (key, oldValue) => UpdateStatus(transaction));
 
             return await Task.FromResult(transaction);
         }
 
-        private bool TryGetTransaction(Guid transactionId, string paRes, out PaymentTransaction transaction)
+        private PaymentTransaction UpdateStatus(PaymentTransaction transaction)
         {
-            return _transactions.TryGetValue(transactionId, out transaction)
-                ? transaction.PaReq.Equals(paRes)
-                : false;
+            if (transaction.Payment.Card.Number.Equals("4111111111111111"))
+            {
+                transaction.TransactionStatus = PaymentStatuses.Approved;
+            }
+            else
+            {
+                if (transaction.Payment.Card.Number.Equals("4007702835532454"))
+                {
+                    transaction.TransactionStatus = PaymentStatuses.DeclinedDueToInvalidCreditCard;
+                }
+                else
+                {
+                    transaction.TransactionStatus = PaymentStatuses.Declined;
+                }
+            }
+
+            return transaction;
         }
 
         public async Task<PaymentStatuses> GetPaymentStatusAsync(Guid transactionId)

@@ -1,0 +1,90 @@
+﻿@using DummyPayService.Api.Models
+@model BankEmitentDataModel
+@{
+    ViewData["Title"] = "Final";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Confirm</h1>
+        <input type='button' onclick='ConfirmPayment()' value='Confirm payment'>
+        <input type='text' id="transactionIdText">
+        <input type='text' id="statusText">
+    </div>
+
+    <div class="text-center">
+        <h1 class="display-4">Confirm</h1>
+        <input type='button' onclick='GetPaymentStatus()' value='Get payment status'>
+        <input type='text' id="getStatusText">
+    </div>
+
+    <div class="text-center">
+        <h1 class="display-4">Return to home</h1>
+        <input type='button' onclick='redirectToHome()' value='Home'>
+    </div>
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+<script>
+    function redirectToHome() {
+        document.location.href='http://localhost:55270/home'
+    }
+
+    async function postData(url = '', data = {}) {
+        const response = await fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'Merchant-Id': '6fc3aa31-7afd-4df1-825f-192e60950ca1',
+                'Secret-Key': '53cr3t'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(data)
+        });
+        return await response.json();
+    }
+
+    function ConfirmPayment() {
+        postData('http://localhost:55270/api/payment/confirm',
+            {
+                "transactionId": "@Model.Md",
+                "paRes": "@Model.PaRes"
+            })
+            .then((data) => {
+                $('#transactionIdText').val(data.result.transactionId);
+                $('#statusText').val(data.result.status);
+                console.log(data);
+            });
+    }
+    
+    async function getData(url = '', data = {}) {
+        const response = await fetch(url, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'Merchant-Id': '6fc3aa31-7afd-4df1-825f-192e60950ca1',
+                'Secret-Key': '53cr3t'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+        });
+        return await response.json();
+    }
+
+    function GetPaymentStatus() {
+        var transactionId = "@Model.Md";
+        var url = 'http://localhost:55270/api/payment/' + transactionId + '/status';
+        getData(url)
+            .then((data) => {
+                $('#getStatusText').val(data.result);
+                console.log(data);
+            });
+    }
+</script>
